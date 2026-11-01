@@ -86,7 +86,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="py-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 items-center gap-4 text-xs text-slate-500">
-          <div className="flex items-center justify-center md:justify-start">
+          <div className="hidden md:block" />
+          <div className="flex items-center justify-center gap-2 text-center flex-wrap">
             <a
               href="https://github.com/tejus29-bot"
               target="_blank"
@@ -96,10 +97,11 @@ export default function Footer() {
               <Github size={14} className="text-slate-400 group-hover:text-white transition-colors" />
               <span>@tejus29-bot</span>
             </a>
+            <span className="text-slate-600 hidden sm:inline">•</span>
+            <span className="flex items-center gap-1">
+              Made With <Heart size={12} className="text-red-400 fill-red-400" /> By TEJUS CHOURASIYA
+            </span>
           </div>
-          <p className="flex items-center justify-center gap-1 text-center">
-            Made With <Heart size={12} className="text-red-400 fill-red-400" /> By TEJUS CHOURASIYA
-          </p>
           <p className="text-center md:text-right">
             © {new Date().getFullYear()} TravelMate AI. All rights reserved.
           </p>
