@@ -25,7 +25,7 @@ const footerLinks = {
 
 const socials = [
   { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
+  { icon: Github, href: 'https://github.com/tejus29-bot', label: 'GitHub' },
   { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
 ]
 
@@ -86,7 +86,17 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="py-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 items-center gap-4 text-xs text-slate-500">
-          <div className="hidden md:block" />
+          <div className="flex items-center justify-center md:justify-start">
+            <a
+              href="https://github.com/tejus29-bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors group"
+            >
+              <Github size={14} className="text-slate-400 group-hover:text-white transition-colors" />
+              <span>@tejus29-bot</span>
+            </a>
+          </div>
           <p className="flex items-center justify-center gap-1 text-center">
             Made With <Heart size={12} className="text-red-400 fill-red-400" /> By TEJUS CHOURASIYA
           </p>
