@@ -3,7 +3,7 @@
 > **AI-Powered Personalized Travel Itinerary Planner**  
 > A full-stack SaaS web application that generates day-by-day travel itineraries using OpenAI GPT.
 
-![TravelMate AI](https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80)
+![TravelMate AI]
 
 ---
 
