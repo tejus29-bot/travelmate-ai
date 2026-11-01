@@ -36,7 +36,8 @@ ENV/
 
 # Node / React
 node_modules/
-dist/
+!frontend/dist
+!frontend/dist/**
 .cache/
 .parcel-cache/
 *.local

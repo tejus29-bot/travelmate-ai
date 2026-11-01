@@ -141,16 +141,53 @@ app.include_router(destinations.router)
 
 
 # ---------------------------------------------------------------------------
-# Root
+# Frontend Static Files & SPA Fallback
 # ---------------------------------------------------------------------------
+import os
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
+_dist_candidates = [
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "dist")),
+    os.path.abspath(os.path.join(os.getcwd(), "frontend", "dist")),
+    os.path.abspath(os.path.join(os.getcwd(), "dist")),
+]
 
-@app.get("/", include_in_schema=False)
-async def root():
-    return {
-        "service": "TravelMate AI API",
-        "version": "1.0.0",
-        "docs": "/docs",
-        "health": "/api/health",
-        "demo_mode": settings.is_demo,
-    }
+FRONTEND_DIST = None
+for candidate in _dist_candidates:
+    if os.path.exists(os.path.join(candidate, "index.html")):
+        FRONTEND_DIST = candidate
+        break
+
+if FRONTEND_DIST:
+    logger.info("Serving frontend SPA from: %s", FRONTEND_DIST)
+    assets_path = os.path.join(FRONTEND_DIST, "assets")
+    if os.path.exists(assets_path):
+        app.mount("/assets", StaticFiles(directory=assets_path), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        if (
+            full_path.startswith("api/")
+            or full_path.startswith("docs")
+            or full_path.startswith("redoc")
+            or full_path.startswith("openapi")
+        ):
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not Found")
+
+        file_path = os.path.join(FRONTEND_DIST, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+else:
+    @app.get("/", include_in_schema=False)
+    async def root():
+        return {
+            "service": "TravelMate AI API",
+            "version": "1.0.0",
+            "docs": "/docs",
+            "health": "/api/health",
+            "demo_mode": settings.is_demo,
+        }

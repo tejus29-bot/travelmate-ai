@@ -65,7 +65,7 @@ export function AuthProvider({ children }) {
 
     try {
       // Register through backend with pre-confirmed email to avoid Supabase email rate limits
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const apiUrl = import.meta.env.VITE_API_URL || ''
       const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
